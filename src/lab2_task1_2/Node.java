@@ -1,4 +1,4 @@
-package lab2_task1;
+package lab2_task1_2;
 
 import java.util.ArrayList;
 import java.util.List;
