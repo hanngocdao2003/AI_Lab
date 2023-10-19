@@ -1,4 +1,4 @@
-package lab2_task1_2;
+package lab2_3;
 
 public class Test {
 	public static void main(String[] args) {
@@ -25,9 +25,17 @@ public class Test {
 		ISearchAlgo algo1 = new BreadthFirstSearchAlgo();
 		Node result = algo1.execute(nodeS, "G");
 		System.out.println(NodeUtils.printPath(result));
+		Node result2 = algo1.execute(nodeS, "A", "B");
+		System.out.println(NodeUtils.printPath(result2));
 
 		ISearchAlgo algo2 = new DepthFirstSearchAlgo();
 		Node result1 = algo2.execute(nodeS, "G");
 		System.out.println(NodeUtils.printPath(result1));
+		Node result3 = algo2.execute(nodeS, "A", "B");
+		System.out.println(NodeUtils.printPath(result3));
+
+		ISearchAlgo algo3 = new UniformCostSearchAlgo();
+		Node result4 = algo3.execute(nodeS, "G");
+		System.out.println(NodeUtils.printPath(result4));
 	}
 }
