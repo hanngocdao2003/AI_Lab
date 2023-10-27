@@ -36,26 +36,27 @@ public class DepthFirstSearchAlgo implements ISearchAlgo {
 	public Node execute(Node root, String start, String goal) {
 		Stack<Node> stack = new Stack<>();
 		List<Node> explored = new ArrayList<>();
-		boolean started = false;
-		stack.add(root);
+
+		stack.push(root);
 		while (!stack.isEmpty()) {
-			Node children = stack.pop();
-			if (children.getLabel().equals(start)) {
-				stack.clear();
-				explored.clear();
-				children.setParent(null);
-				started = true;
+			Node currentNode = stack.pop();
+			explored.add(currentNode);
+
+			if (currentNode.getLabel().equals(goal)) {
+				return currentNode; // Trả về nút chứa mục tiêu
 			}
-			if (children.getLabel().equals(goal) && started) {
-				return children;
+
+			if (currentNode.getLabel().equals(start)) {
+				start = null; // Đặt "start" thành null sau khi sử dụng nó
 			}
-			explored.add(children);
-			List<Node> child = children.getChildrenNodes();
-			Collections.reverse(child);
-			for (Node ch : child) {
-				if (!stack.contains(ch) && !explored.contains(ch)) {
-					stack.push(ch);
-					ch.setParent(children);
+
+			List<Node> childNodes = currentNode.getChildrenNodes();
+			Collections.reverse(childNodes);
+
+			for (Node child : childNodes) {
+				if (!explored.contains(child) && !stack.contains(child)) {
+					stack.push(child);
+					child.setParent(currentNode);
 				}
 			}
 		}
