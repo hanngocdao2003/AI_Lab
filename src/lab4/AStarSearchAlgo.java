@@ -62,6 +62,10 @@ public class AStarSearchAlgo implements IInformedSearchAlgo {
 	@Override
 	public boolean isAdmissibleH(Node root, String goal) {
 		// TODO Auto-generated method stub
+		// h(n) <= h*(n)
+		// all node satisfy
+		execute(root, goal);
+		
 		return false;
 	}
 }
