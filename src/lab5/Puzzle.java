@@ -90,59 +90,47 @@ public class Puzzle {
 	}
 
 	public Node moveWhiteTile(Node currentState, char operator) {
-		Node result = new Node(currentState);
-		int[] whiteTile = currentState.getLocation(0);// get white tile
-		if (operator == 'u') {// Case-1: Move tile UP
-			// New postion of tile if move UP
-			int row = whiteTile[0] - 1;
-			int col = whiteTile[1];
-			if (row >= 0) {// Tile stands inside the map
-				int tmp = currentState.getTile(row, col);
-				result.updateTile(row, col, 0);
-				result.updateTile(whiteTile[0], whiteTile[1], tmp);
-				result.setH(computeH2(result));
-				return result;
-			}
-		}
+	    Node result = new Node(currentState);
+	    int[] whiteTile = currentState.getLocation(0); // Lấy vị trí ô trống
+	    int row = whiteTile[0];
+	    int col = whiteTile[1];
 
-		else if (operator == 'd') {// Case-2: Move tile DOWN
-			/* Enter your code here */
-			int row = whiteTile[0] + 1;
-			int col = whiteTile[1];
-			if (row >= 0) {// Tile stands inside the map
-				int tmp = currentState.getTile(row, col);
-				result.updateTile(row, col, 0);
-				result.updateTile(whiteTile[0], whiteTile[1], tmp);
-				result.setH(computeH2(result));
-				return result;
-			}
-		} else if (operator == 'l') {// Case-3: Move tile LEFT
-			/* Enter your code here */
-			int row = whiteTile[0];
-			int col = whiteTile[1] - 1;
-			if (row >= 0) {// Tile stands inside the map
-				int tmp = currentState.getTile(row, col);
-				result.updateTile(row, col, 0);
-				result.updateTile(whiteTile[0], whiteTile[1], tmp);
-				result.setH(computeH2(result));
-				return result;
-			}
-		}
-
-		else if (operator == 'r') {// Case-4: Move tile RIGHT
-			/* Enter your code here */
-			int row = whiteTile[0];
-			int col = whiteTile[1] + 1;
-			if (row >= 0) {// Tile stands inside the map
-				int tmp = currentState.getTile(row, col);
-				result.updateTile(row, col, 0);
-				result.updateTile(whiteTile[0], whiteTile[1], tmp);
-				result.setH(computeH2(result));
-				return result;
-			}
-		}
-		return null;
+	    if (operator == 'u') { // Di chuyển ô trống lên trên
+	        if (row > 0) { // Kiểm tra xem ô trống có thể di chuyển lên trên không
+	            int tmp = currentState.getTile(row - 1, col);
+	            result.updateTile(row - 1, col, 0);
+	            result.updateTile(row, col, tmp);
+	            result.setH(computeH2(result)); // Cập nhật giá trị heuristic
+	            return result;
+	        }
+	    } else if (operator == 'd') { // Di chuyển ô trống xuống dưới
+	        if (row < currentState.getRow() - 1) {
+	            int tmp = currentState.getTile(row + 1, col);
+	            result.updateTile(row + 1, col, 0);
+	            result.updateTile(row, col, tmp);
+	            result.setH(computeH2(result));
+	            return result;
+	        }
+	    } else if (operator == 'l') { // Di chuyển ô trống sang trái
+	        if (col > 0) {
+	            int tmp = currentState.getTile(row, col - 1);
+	            result.updateTile(row, col - 1, 0);
+	            result.updateTile(row, col, tmp);
+	            result.setH(computeH2(result));
+	            return result;
+	        }
+	    } else if (operator == 'r') { // Di chuyển ô trống sang phải
+	        if (col < currentState.getColumn() - 1) {
+	            int tmp = currentState.getTile(row, col + 1);
+	            result.updateTile(row, col + 1, 0);
+	            result.updateTile(row, col, tmp);
+	            result.setH(computeH2(result));
+	            return result;
+	        }
+	    }
+	    return null; // Trả về null nếu không thể di chuyển ô trống theo hướng đã chọn
 	}
+
 
 	public List<Node> getSuccessors(Node currentState) {
 		ArrayList<Node> result = new ArrayList<Node>();
